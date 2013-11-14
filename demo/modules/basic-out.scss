@@ -1,0 +1,63 @@
+
+.social-slides-out{
+	width: 100%;
+
+
+	.sta-container{
+		font-family: "lucida grande";
+		padding: 0.1em;
+		@include single-box-shadow(rgba(0,0,0,0.4), 0px, 0px, 7px, 1px, inset);
+		border: none;
+		@include border-radius(6px);
+		@include single-transition(all, 0.2s, linear, 0s);
+		height: 3em;
+		margin-bottom: 2.5em;
+	}
+
+
+	.sta-button{
+		cursor: pointer;
+		@include single-box-shadow(rgba(0,0,0,0.4), 0px, 0px, 5px, 0px);
+		
+		border-bottom-width: 4px;
+		border-bottom-style: solid;
+		@include border-radius(6px);
+		color: white;
+		@include box-sizing(border-box);		
+		padding: 0.2em;
+		padding-top: 0.3em;
+		text-align: center;
+		font-size: 2em;
+		width: 2em;
+		height: 4rem;
+		margin-top: -0.25em;
+	}
+
+	.sta-complete.sta-container{
+		text-align: center;
+		@include single-box-shadow(none);
+	}
+
+	.sta-slide-msg{
+			margin-top: 0.8em;
+	}
+
+	.sta-success-msg{
+		color: white;
+	margin-top: 0.8em;
+	display: block;
+	text-align: center;
+	display: none;
+	}
+}
+
+*::selection{
+	background-color: transparent;
+}
+
+.sli-hold{
+	width: 50%;
+	float: left;
+	@include box-sizing(border-box);
+	padding: 2em;
+}

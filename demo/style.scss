@@ -1,0 +1,31 @@
+@import "compass";
+@import "fonts";
+@import "modules/skeleton";
+@import "modules/basic";
+@import "modules/basic-out";
+@import "modules/circle";
+@import "modules/circle-out";
+
+
+body{
+	background-color: rgb(30,30,30);
+	background-color: white;
+	@include single-transition(all, 0.2s, linear, 0s);
+}
+
+
+
+*::selection{
+	background-color: transparent;
+}
+
+.sli-hold{
+	width: 100%;
+	float: left;
+	@include box-sizing(border-box);
+	padding: 2em;
+}
+
+
+
+

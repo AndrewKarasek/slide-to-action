@@ -1,0 +1,104 @@
+$br : 30px;
+
+.circle-slides{
+	width: 100%;
+	.sta-container{
+		font-family: "lucida grande";
+		padding: 0.1em;
+		@include single-box-shadow(rgba(0,0,0,0.4), 0px, 0px, 7px, 1px, inset);
+		border: none;
+		@include border-radius($br);
+		@include single-transition(all, 0.2s, linear, 0s);
+	}
+
+
+	.sta-button{
+		cursor: pointer;
+		@include single-box-shadow(rgba(0,0,0,0.4), 0px, 0px, 5px, 0px);
+		
+		border-width: 0.2em;
+		border-style: solid;
+		@include border-radius($br);
+		color: white;
+		@include box-sizing(border-box);		
+		padding: 0.2em;
+		padding-top: 0.2em;
+		text-align: center;
+		font-size: 2em;
+		width: 1.8em;
+	}
+
+	.sta-complete.sta-container{
+		text-align: center;
+		@include single-box-shadow(none);
+	}
+
+	.sta-slide-msg{
+			margin-top: 1.3em;
+	}
+
+	.sta-success-msg{
+		color: white;
+	margin-top: 1.3em;
+	display: block;
+	text-align: center;
+	display: none;
+	}
+
+
+	.fb-sta-button{
+		background-color: rgb(72, 98, 163);
+		@include background(
+	                      linear-gradient(bottom, rgb(39, 69, 132), rgb(98,125,182))
+	                     );
+	
+		border-color: rgb(12, 38, 103);
+	}
+	.git-sta-button{
+		background-color: rgb(72, 98, 163);
+
+			@include background(
+	                      linear-gradient(bottom, rgb(120, 120, 130), rgb(180,180,190))
+	        );
+	
+		border-color: rgb(100, 100, 100);
+	}
+	.tw-sta-button{
+		background-color: rgb(72, 98, 163);
+
+			@include background(
+	                      linear-gradient(bottom, rgb(3, 155, 217), rgb(69, 207, 255))
+	                     );
+
+		border-color: rgb(0, 135, 197);
+	}
+
+
+
+	.fb-sta-container{
+		background-color: rgb(72, 98, 163);
+
+		border-color: rgb(12, 38, 103);
+	}
+	.git-sta-container{
+		background-color: rgb(100,100,100);
+
+
+		border-color: rgb(100, 100, 100);
+	}
+	.tw-sta-container{
+		background-color: rgb(27,172,225);
+		border-color: rgb(0, 135, 197);
+	}
+
+	.fb-sta-slide-msg{
+		color: white;
+	}
+	.git-sta-slide-msg{
+		color: white;
+	}
+	.tw-sta-slide-msg{
+		color: white;
+	}
+}
+

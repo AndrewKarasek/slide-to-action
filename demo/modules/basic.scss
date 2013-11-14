@@ -1,0 +1,151 @@
+/* FACEBOOK */
+
+
+.fb-sta-container{
+	background-color: rgb(230,230,235);
+}
+
+.fb-sta-button{
+	background-color: rgb(72, 98, 163);
+	@include background(
+                      linear-gradient(bottom, rgb(39, 69, 132), rgb(98,125,182))
+                     );
+	border: none;
+	border-bottom-color: rgb(12, 38, 103);
+}
+
+.sta-complete.fb-sta-container{
+	background-color: rgb(72, 98, 163);
+
+}
+.fb-sta-success-msg{
+	
+}
+
+.fb-sta-slide-msg{
+
+	color: rgb(72, 98, 163);
+	
+}
+
+
+/* GITHUB */
+
+.git-sta-container{	
+	background-color: rgb(230,230,235);
+}
+
+.git-sta-button{
+	background-color: rgb(72, 98, 163);
+
+		@include background(
+                      linear-gradient(bottom, rgb(120, 120, 130), rgb(180,180,190))
+        );
+	border: none;
+	border-bottom-color: rgb(100, 100, 100);
+}
+
+.sta-complete.git-sta-container{
+	background-color: rgb(100,100,100);
+
+}
+.git-sta-success-msg{
+	
+}
+
+.git-sta-slide-msg{
+	color: rgb(100,100,100);
+	
+}
+
+
+/* TWITTER */
+
+
+.tw-sta-container{
+	background-color: rgb(230,230,235);
+}
+
+.tw-sta-button{
+	background-color: rgb(72, 98, 163);
+
+		@include background(
+                      linear-gradient(bottom, rgb(3, 155, 217), rgb(69, 207, 255))
+                     );
+	border: none;
+	border-bottom-color: rgb(0, 135, 197);
+}
+
+.sta-complete.tw-sta-container{
+
+		background-color: rgb(27,172,225)
+}
+.tw-sta-success-msg{
+
+}
+
+.tw-sta-slide-msg{
+	color: rgb(100,100,100);
+	color: rgb(27,172,225)
+}
+
+
+
+
+
+.social-slides{
+	width: 100%;
+	.sta-container{
+		font-family: "lucida grande";
+		padding: 0.1em;
+		@include single-box-shadow(rgba(0,0,0,0.4), 0px, 0px, 7px, 1px, inset);
+		border: none;
+		@include border-radius(6px);
+		@include single-transition(all, 0.2s, linear, 0s);
+	}
+
+
+	.sta-button{
+		cursor: pointer;
+		@include single-box-shadow(rgba(0,0,0,0.4), 0px, 0px, 5px, 0px);
+		
+		border-bottom-width: 4px;
+		border-bottom-style: solid;
+		@include border-radius(6px);
+		color: white;
+		@include box-sizing(border-box);		
+		padding: 0.2em;
+		padding-top: 0.3em;
+		text-align: center;
+		font-size: 2em;
+		width: 2em;
+	}
+
+	.sta-complete.sta-container{
+		text-align: center;
+		@include single-box-shadow(none);
+	}
+
+	.sta-slide-msg{
+			margin-top: 1.3em;
+	}
+
+	.sta-success-msg{
+		color: white;
+	margin-top: 1.3em;
+	display: block;
+	text-align: center;
+	display: none;
+	}
+}
+
+*::selection{
+	background-color: transparent;
+}
+
+.sli-hold{
+	width: 50%;
+	float: left;
+	@include box-sizing(border-box);
+	padding: 2em;
+}

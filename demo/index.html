@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>jQuery Boilerplate</title>
+		<script src="../dist/jquery-1.10.2.min.js"></script>
+		<script src="../src/slideToAction.js"></script>
+		<link rel="stylesheet" href="style.css">
+		<meta name="viewport" content="initial-scale = 1.0,maximum-scale = 1.0" />
+
+	</head>
+	<body>
+
+		<div class="content">
+			<div class="prythm-sta">
+
+				
+				<div class="prythm-sta-button">
+				
+						<div class="prythm-sta-button-inner">
+							&#x2192;
+						</div>
+				
+				</div>
+
+					<span class="prythm-sta-msg">Slide To Action</span>
+					<span class="prythm-sta-success-msg">Success</span>
+			</div>		
+
+
+			<div class="slideToAction-button">
+				<div class="slideToAction-button-inner">
+				</div>
+			</div>
+
+				<a href="http://www.prythm.com" class="slideToAction" id="prythmLink">Prythm</a>
+
+
+				<div class="social-slides sli-hold">
+					<a href="http://www.facebook.com" class="fbsli" id="fbLink">Facebook</a>
+					<a href="http://www.twitter.com" class="twsli" id="twitterLink">Twitter</a>
+					<a href="http://www.github.com" class="gsli" id="gitLink">Github</a>
+
+				</div>
+
+				<div class="social-slides-out sli-hold">
+					<a href="http://www.facebook.com" class="fbsli" id="fbLink">Facebook</a>
+					<a href="http://www.twitter.com" class="twsli" id="twitterLink">Twitter</a>
+					<a href="http://www.github.com" class="gsli" id="gitLink">Github</a>
+
+				</div>
+
+
+
+				<div class="circle-slides sli-hold">
+					<a href="http://www.facebook.com" class="fbsli" id="mfbLink">Facebook</a>
+					<a href="http://www.twitter.com" class="twsli" id="mtwitterLink">Twitter</a>
+					<a href="http://www.github.com" class="gsli" id="mgitLink">Github</a>
+				</div>
+
+
+				<div class="circle-slides-out sli-hold">
+					<a href="http://www.facebook.com" class="fbsli" id="mfbLink">Facebook</a>
+					<a href="http://www.twitter.com" class="twsli" id="mtwitterLink">Twitter</a>
+					<a href="http://www.github.com" class="gsli" id="mgitLink">Github</a>
+				</div>
+
+				<a href="prythm.com" class="slideme">Pryidddd</a>
+
+				<form method="post">
+				 <input type="text" name="name" action="index.html/posted" />
+				 <input type="submit" />
+				</form>
+		</div>
+
+		<script>
+		var timmeout;
+		var mousedown;
+	
+		var success = false;
+		var clak = "clak.mp3";
+		var zap = "zap.wav";
+		function playSound(audioFile){      
+      	
+      		var sound = new Audio(audioFile);   
+      		sound.play();      
+   		}
+
+
+  
+
+		$(".prythm-sta-button").mousedown(function(e){
+		
+			var button = $(this);
+			var widthy = $(this).width() / 2;
+			var container = $(this).parent();
+			var msg = container.find(".prythm-sta-msg");
+			var iw = container.innerWidth();
+			var ipl = parseInt(container.css("padding-left"));
+			var ipr = parseInt(container.css("padding-right"));
+			iw = iw - ipl;
+			iw = iw - ipr;
+			var rightpos = iw-button.outerWidth();
+			mousedown = true;
+
+
+			container.mousemove(function(e){
+				if(mousedown){
+				  var offset = $(this).offset();
+  				  var relativeX = (e.pageX - offset.left);
+  				  msg.addClass("prythm-sta-sliding");
+				  //console.log(relativeX);
+				  
+				  //console.log(aiw);
+
+				  if(relativeX < 72){ //LEFT PADDING + BUTTON WIDTH / /2  //start
+				  	button.css("margin-left", 0);
+				  } 
+				  else if(relativeX > 332){ //INNER WIDTH - ( RIGHT PADDING + BUTTON WIDTH / 2) //success //end
+				  	button.css("margin-left", rightpos);
+					successtime = 200;
+					$(window).trigger("slideComplete");
+				  } else {
+				  	button.css("margin-left", relativeX-widthy-36); //follow pointer
+				  }
+				 
+				}
+
+			});
+
+		});
+/*
+		$(window).on("slideComplete", function(){
+			
+   		if(!success){ //only exc once
+
+
+   		setTimeout(function(){
+   				playSound(clak);
+   			}, 50);
+
+			
+			setTimeout(function(){
+					$("body").addClass("anim");
+				$(".prythm-sta").addClass("slid");
+				$(".prythm-sta-success-msg").animate({opacity: 1}, 500);
+			}, 300);
+			success = true;
+			}
+		});
+ 
+
+*/
+		$(document).mouseup(function(){
+				//allow a success bool to be passed to stop the slide going
+				//back to the start while success delay is going
+				if(!success){
+						$(".prythm-sta-button").animate({
+		    			marginLeft: 0
+		    	}, 200, function(){
+		    		$(".prythm-sta-sliding").removeClass("prythm-sta-sliding");
+
+
+		    	}); //revert animation time
+				}
+			
+		
+	
+		 	
+		 	mousedown = false;
+		});
+
+		$("#prythmLink").slideToAction({
+			classPrefix: "pizzy"
+		});
+
+		$(".fbsli").slideToAction({
+			classPrefix: "fb",
+			slideMsg: "Slide to Like",
+			buttonHTML: "<i class='ss-icon'>Facebook</i>",
+			successMsg: "Liked"
+		});
+
+		$(".twsli").slideToAction({
+			classPrefix: "tw",
+			slideMsg: "Slide to Tweet",
+			buttonHTML: "<i class='ss-icon'>Twitter</i>",
+			successMsg: "Tweeted"
+		});
+
+		$(".gsli").slideToAction({
+			classPrefix: "git",
+			slideMsg: "Slide to Fork",
+			buttonHTML: "<i class='ss-icon'>Githuboctocat</i>",
+			successMsg: "Forked"
+		});
+
+
+
+
+		</script>
+
+	</body>
+</html>
