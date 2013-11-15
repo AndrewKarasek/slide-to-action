@@ -32,41 +32,16 @@
 				</div>
 			</div>
 
-				<a href="http://www.prythm.com" class="slideToAction" id="prythmLink">Prythm</a>
 
 
 				<div class="social-slides sli-hold">
 					<span id="acc">0</span>
 					<a href="http://www.facebook.com" class="fbsli" id="fbLink">Facebook</a>
 					<a href="http://www.twitter.com" class="twsli" id="twitterLink">Twitter</a>
-					<a href="http://www.github.com" class="gsli" id="gitLink">Github</a>
-
+					
 				</div>
 
-				<div class="social-slides-out sli-hold">
-					<a href="http://www.facebook.com" class="fbsli" id="fbLink">Facebook</a>
-					<a href="http://www.twitter.com" class="twsli" id="twitterLink">Twitter</a>
-					<a href="http://www.github.com" class="gsli" id="gitLink">Github</a>
-
-				</div>
-
-
-
-				<div class="circle-slides sli-hold">
-					<a href="http://www.facebook.com" class="fbsli" id="mfbLink">Facebook</a>
-					<a href="http://www.twitter.com" class="twsli" id="mtwitterLink">Twitter</a>
-					<a href="http://www.github.com" class="gsli" id="mgitLink">Github</a>
-				</div>
-
-
-				<div class="circle-slides-out sli-hold">
-					<a href="http://www.facebook.com" class="fbsli" id="mfbLink">Facebook</a>
-					<a href="http://www.twitter.com" class="twsli" id="mtwitterLink">Twitter</a>
-					<a href="http://www.github.com" class="gsli" id="mgitLink">Github</a>
-				</div>
-
-				<a href="prythm.com" class="slideme">Pryidddd</a>
-
+		
 				<form method="post">
 				 <input type="text" name="name" action="index.html/posted" />
 				 <input type="submit" />
@@ -178,7 +153,10 @@
 			classPrefix: "fb",
 			slideMsg: "Slide to Like",
 			buttonHTML: "<i class='ss-icon'>Facebook</i>",
-			successMsg: "Liked"
+			successMsg: "Liked",
+			afterSlide: function(){
+				console.log("boobs");
+			}
 		});
 
 		$(".twsli").slideToAction({

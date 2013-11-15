@@ -1,17 +1,6 @@
-// the semi-colon before function invocation is a safety net against concatenated
-// scripts and/or other plugins which may not be closed properly.
+
 ;(function ( $, window, document, undefined ) {
 
-		// undefined is used here as the undefined global variable in ECMAScript 3 is
-		// mutable (ie. it can be changed by someone else). undefined isn't really being
-		// passed in so we can ensure the value of it is truly undefined. In ES5, undefined
-		// can no longer be modified.
-
-		// window and document are passed through as local variable rather than global
-		// as this (slightly) quickens the resolution process and can be more efficiently
-		// minified (especially when both are regularly referenced in your plugin).
-
-		// Create the defaults once
 		var pluginName = "slideToAction",
 				defaults = {
 				slideMsg: "Slide To Action...",
@@ -20,17 +9,18 @@
 				classPrefix: "my",
 				buttonHTML: "thug",
 				swapAtBp: true,
+				afterSlide: function(){}
 		};
 
-		// The actual plugin constructor
 		function Plugin ( element, options ) {
 
 
-				this.element = element;				
+				this.element = element;
 				this.settings = $.extend( {}, defaults, options );
 				this._name = pluginName;this._defaults = defaults;
 			
-				this.init();
+				this.initialize();
+				this.behaviour();
 
 				
 		}
@@ -38,154 +28,204 @@
 
 
 		Plugin.prototype = {
-				init: function () {
-						ob = [];
-						elms = [];
-						sizes = [];
+				initialize: function() {
 
-						ob.elmLink = $(this.element).attr("href");
-						ob.pfx = this.settings["classPrefix"];
-						ob.elm = $(this.element);
-						ob.elmtype = $(this.element).prop("tagName");
-						ob.successm = this.settings["successMsg"];
-						ob.bt = this.settings["buttonHTML"];
-						ob.slidem = this.settings["slideMsg"];
-						ob.mousedown = false;
-						ob.done = false;
+						function setup(obj){
 
-						elms.container;
-						elms.button;
-						elms.elm = $(this.element);
+							var elm = {};
+							var prefix = obj.settings.classPrefix;
+							var innerHTML = "<div class='sta-container "+prefix+"-sta-container'>";
+							innerHTML += "<div class='sta-button "+prefix+"-sta-button'>"+obj.settings.buttonHTML+"</div>";
+							innerHTML += "<span class='sta-slide-msg "+prefix+"-sta-slide-msg'>"+obj.settings.slideMsg+"</span>";
+							innerHTML += "<div class='sta-success-msg "+prefix+"-sta-success-msg'>"+obj.settings.successMsg+"</div>";
+							innerHTML += "</div>";
 
-						sizes.pl;
-						sizes.pr;
-						sizes.bw;
-						sizes.bwhalf;
-						sizes.cw;
-						sizes.realinner;
-						sizes.rightpos;
-
-						console.log(ob.elm);
-						
-						function setup(){
-							console.log(ob.bt);
-							var buttonHTML = "<div class='sta-button "+ob.pfx+"-sta-button'>"+ob.bt+"</div>";
-							var slideMsgHTML = "<span class='sta-slide-msg "+ob.pfx+"-sta-slide-msg'>"+ob.slidem+"</span>";
-							var successMsgHTML = "<div class='sta-success-msg "+ob.pfx+"-sta-success-msg'>"+ob.successm+"</div>";
+							$(obj.element).replaceWith(innerHTML);
 							
-							elms.elm.wrap("<div class='sta-container "+ob.pfx+"-sta-container'>");
-							
-							elms.container = ob.elm.parent();
-							elms.container.data("type", ob.elmtype);
-							if(ob.elmtype === "A"){
-								elms.container.data("href", ob.elmLink);
+							elm.container = $(obj.element).parent();
+
+
+							//check what kinda ting it is
+							elm.container.data("type", $(obj.element).prop("tagName"));
+							if(elm.container.data("type") === "A"){
+								console.log("its a bit of data");
+								elm.container.data("href", $(obj.element).attr("href"));
 							}
 
+							elm.container.html(innerHTML);
 
-							elms.container.html(buttonHTML);
+						}
 
-							elms.container.append(slideMsgHTML);
-							elms.container.append(successMsgHTML);
 
-							elms.button = elms.container.find(".sta-button");
+						setup(this);
+					},
+
+				behaviour: function () {
+						var ob = {};
+						var sizes = {};
+						var just = {};
+
+						var button = $(".sta-button");
+						var container = $(".sta-container");
+						var afterSlide = this.settings.afterSlide;
 						
+						ob.mousedown = false;
+						ob.done = false;
+						ob.audio = loadSound("clak.mp3");
+
+						just.button = {};
+						just.container = {};
+						just.slideMsg = {};
+
+						sizes.pl = 0;
+						sizes.pr = 0;
+						sizes.cw = 0;
+						sizes.bw = 0;
+						sizes.bwhalf = 0;
+						sizes.realinner = 0;
+						sizes.rightpos = 0;
+						sizes.rightcheck = 0;
+						sizes.leftcheck = 0;
+
+				
+
+					
+						function preSlide(e, elm){
+								ob.done = false;
+								just.button = elm;
+								just.container = elm.parent();
+								just.slideMsg = just.container.find(".sta-slide-msg");
+
+								sizes.pl = parseInt(just.container.css("padding-left").replace("px", ""), 10);
+								sizes.pr = parseInt(just.container.css("padding-right").replace("px", ""), 10);
+								sizes.cw = just.container.innerWidth();
+								sizes.bw = just.button.outerWidth();
+								sizes.bwhalf = sizes.bw / 2;
+
+								sizes.realinner = sizes.cw - sizes.pl;
+								sizes.realinner = sizes.realinner - sizes.pr;
+
+								sizes.rightpos = sizes.realinner - sizes.bw;
+
+								sizes.rightcheck = sizes.cw - sizes.bwhalf;
+								sizes.rightcheck = sizes.rightcheck - sizes.pr;
+
+								sizes.leftcheck = sizes.bwhalf + sizes.pl;
+								sizes.offset = just.container.offset();
+
+								just.slideMsg.fadeOut(100);
 						}
-						alert("x");
-						function getSizes(){
-	
-						}
-
-						function slideMe(e, elm){
-								var button = elm.find(".sta-button");
-								var slideMsg = elm.find(".sta-slide-msg");
-
-								var pl = parseInt(elm.css("padding-left"));
-								var pr = parseInt(elm.css("padding-right"));
-								var cw = elm.innerWidth();
-								var bw = button.outerWidth();
-								var bwhalf = bw / 2;
-								var realinner = cw - pl;
-								var realinner = realinner - pr;
-								var rightpos = realinner -bw;
-
-								var offset = elm.offset();
-  				  				var relativeX = (e.pageX - offset.left);
-  				  				var leftcheck = bwhalf + pl;
 
 
 
-  				  				var rightcheck = cw - bwhalf;
-  				  				rightcheck = rightcheck - pr;
+						function slideMe(e, just){
+							var relativeX = 0;
+							if("ontouchstart" in window){
+								relativeX = (e.originalEvent.targetTouches[0].pageX - sizes.offset.left); //set up if duh
+							} else{
+								relativeX = (e.pageX - sizes.offset.left);
+							}
 
-  				  				
-  				  				slideMsg.fadeOut(100);
+							if(relativeX < sizes.leftcheck){
 
-  				  				if(relativeX < leftcheck){
-  				  					console.log("less");
-  				  					button.css("margin-left", 0);
-  				  				} else if(relativeX > rightcheck){
-  				  					button.css("margin-left", rightpos);
-  				  					elm.trigger("slideComplete");
-  				  					
-  				  				} else{
-  				  					button.css("margin-left", relativeX-bwhalf);
-  				  				}
+								just.button.css("margin-left", 0);
+							} else if(relativeX > sizes.rightcheck){
+								just.button.css("margin-left", sizes.rightpos);
+								just.container.trigger("slideComplete");
+
+							} else{
+								just.button.css("margin-left", relativeX-sizes.bwhalf);
+							}
 						}
 
 
-						setup();
-						getSizes();
-						console.log(sizes);
 
-						elms.button.mousedown(function(){
-							ob.done = false;
-
-							$(this).data("md", true);
-							console.log(ob.mousedown);
+						button.on("touchstart", function(e){
+							
+							e.preventDefault();
+							$(this).trigger("mousedown");
 						});
 
-						elms.container.mousemove(function(e){
-
+						container.on("touchmove", function(e){
 							var md = $(this).find(".sta-button").data("md");
 							if(md){
 
+							
+									slideMe(e, just);
+							}
+
+							e.preventDefault();
+						});
+
+						container.on("touchend", function(e){
+							e.preventDefault();
+							$(document).trigger("mouseup");
+						});
+
+
+						button.mousedown(function(e){
+							var elm = $(this);
+							preSlide(e, elm);
+
+							ob.done = false;
+							$(this).data("md", true);
+
+							just.button = $(this);
+							just.container = $(this).parent();
+							just.slideMsg = just.container.find(".sta-slide-msg");
+						});
+
+						container.mousemove(function(e){
+
+							var md = $(this).find(".sta-button").data("md");
+							if(md){
+							
 								var elm = $(this);
-									slideMe(e, elm);
+									slideMe(e, just);
 							}
 						});
-						
+
 						$(document).mouseup(function(){
-							$(".sta-button").data("md", false);
+							slideBack();
+						});
+
+						
+						function loadSound(uri){
+							var audio = new Audio();
+							audio.src = uri;
+							return audio;
+						}
+
+						function playSound(){        	
+					      	ob.audio.play();      
+   						}
+
+   						function slideBack(){
+   							$(".sta-button").data("md", false); //doing it to all
 
 							if(!ob.done){
 								$(".sta-button").animate({
 									marginLeft: 0
 								}, 500, function(){
-									$(".sta-slide-msg").fadeIn(100);
-									ob.done = false;
+									//$(".sta-slide-msg").fadeIn(100);
+									//ob.done = false;
 								});	
 							}
-
-						});
-
-							
-							var clak = "clak.mp3";
-							var zap = "zap.wav";
-							function playSound(audioFile){      
-					      	
-					      		var sound = new Audio(audioFile);   
-					      		sound.play();      
    						}
+
+   						playSound();
 
 						function slideComplete(e, elm){
 							if(!ob.done){
 
 								setTimeout(function(){
-									playSound(clak);
+									playSound();
 								}, 50);
 
 
 								setTimeout(function(){
+									afterSlide();
+
 									elm.find(".sta-success-msg").fadeIn(100);
 									elm.addClass("sta-complete");
 									elm.find(".sta-button").fadeOut(50, function(){
@@ -213,7 +253,7 @@
 
 						$(".sta-container").on("slideComplete", function(e){
 							//window.location = ob.elmLink;
-
+							
 							slideComplete(e, $(this));
 							
 						})
@@ -223,9 +263,6 @@
 
 		};
 
-
-		// A really lightweight plugin wrapper around the constructor,
-		// preventing against multiple instantiations
 		$.fn[ pluginName ] = function ( options ) {
 				return this.each(function() {
 						if ( !$.data( this, "plugin_" + pluginName ) ) {
