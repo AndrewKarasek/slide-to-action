@@ -334,11 +334,11 @@ html:hover [class^="ss-"] { -ms-zoom: 1; }
 /* line 104, modules/circle-out.scss */
 .circle-slides-out .tw-sta-slide-msg { color: white; }
 
-/* line 10, style.scss */
+/* line 26, style.scss */
 body { background-color: #1e1e1e; background-color: white; -webkit-transition: all 0.2s linear; -webkit-transition-delay: 0s; -moz-transition: all 0.2s linear 0s; -o-transition: all 0.2s linear 0s; transition: all 0.2s linear 0s; }
 
-/* line 18, style.scss */
+/* line 34, style.scss */
 *::selection { background-color: transparent; }
 
-/* line 22, style.scss */
+/* line 38, style.scss */
 .sli-hold { width: 100%; float: left; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; padding: 2em; }

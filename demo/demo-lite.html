@@ -37,8 +37,8 @@
 				<div class="social-slides sli-hold">
 					<span id="acc">0</span>
 					<a href="http://www.facebook.com" class="fbsli" id="fbLink">Facebook</a>
-					<a href="http://www.twitter.com" class="twsli" id="twitterLink">Twitter</a>
-					
+					<button class="hey" onclick="alert('hey there')">Hey There</button>
+					<a href="http://www.facebook.com" class="gsli" id="fbLink" onclick="silly()">Git</a>
 				</div>
 
 		
@@ -126,56 +126,36 @@
  
 
 */
-		$(document).mouseup(function(){
-				//allow a success bool to be passed to stop the slide going
-				//back to the start while success delay is going
-				if(!success){
-						$(".prythm-sta-button").animate({
-		    			marginLeft: 0
-		    	}, 200, function(){
-		    		$(".prythm-sta-sliding").removeClass("prythm-sta-sliding");
 
+	function gaybar(){
+		alert("cya there");
+	}
 
-		    	}); //revert animation time
-				}
-			
-		
-	
-		 	
-		 	mousedown = false;
-		});
-
-		$("#prythmLink").slideToAction({
-			classPrefix: "pizzy"
-		});
 
 		$(".fbsli").slideToAction({
 			classPrefix: "fb",
-			slideMsg: "Slide to Like",
+			slideHTML: "&#8674; Slide to Like PRYTHM",
 			buttonHTML: "<i class='ss-icon'>Facebook</i>",
-			successMsg: "Liked",
-			afterSlide: function(){
-				console.log("boobs");
-			}
-		});
+			successHTML: "Liked",
+			maxWidth: 600,
+			touchOnly: true
+			
+		});	
 
-		$(".twsli").slideToAction({
-			classPrefix: "tw",
-			slideMsg: "Slide to Tweet",
-			buttonHTML: "<i class='ss-icon'>Twitter</i>",
-			successMsg: "Tweeted"
-		});
+		/*
+		$(".hey").slideToAction();
 
 		$(".gsli").slideToAction({
 			classPrefix: "git",
-			slideMsg: "Slide to Fork",
+			slideHTML: "Slide to Fork",
 			buttonHTML: "<i class='ss-icon'>Githuboctocat</i>",
-			successMsg: "Forked"
+			successHTML: "Forked",
+			touchOnly: true
 		});
+		*/
 
 
-
-
+	
 		</script>
 
 	</body>

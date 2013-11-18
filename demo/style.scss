@@ -7,6 +7,22 @@
 @import "modules/circle-out";
 
 
+$experimental-support-for-svg:true;
+
+
+@mixin breakpoint($point) {
+  @if $point == une {
+    @media (min-width: 500px) { @content; }
+  }
+  @else if $point == duex {
+    @media (min-width: 800px) { @content; }
+  }
+  @else if $point == trois {
+    @media (min-width: 1000px)  { @content; }
+  }
+}
+
+
 body{
 	background-color: rgb(30,30,30);
 	background-color: white;
